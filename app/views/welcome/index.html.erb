@@ -1,0 +1,20 @@
+<% require 'indico' %>
+<% Indico.api_key = "bc5a4dd18dd9575c7a29b61a291df552" %>
+
+<h1>Tweets</h1>
+
+<% tweets = $client.home_timeline(:page => 1, :count => 5) %>
+
+<% tweetstext = [] %>
+
+<% tweets.each do |p| %>
+    <% tweetstext.push(p.text) %>
+    <li><%= p.text %><br><%= p.created_at %></li>
+<% end %>
+
+<h1>Sentiment</h1>
+
+<% sentiments = Indico.sentiment(tweetstext) %>
+<%= sentiments %><br>
+<% average = sentiments.sum / sentiments.size.to_f %>
+<%= average %>
