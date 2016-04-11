@@ -2,27 +2,29 @@
 <% Indico.api_key = "bc5a4dd18dd9575c7a29b61a291df552" %>
 
 <% if current_user %>
-<h2>Signed in as <%= current_user.name %></h2>
+    <h2>Signed in as <%= current_user.name %></h2>
+    
+    <h1>Tweets</h1>
+    
+    <% tweets = current_user.twitter.home_timeline(:page => 1, :count => 10) %>
+    
+    <% tweetstext = [] %>
+    
+    <% emotions = [] %>
+    
+    <% tweets.each do |p| %>
+        <% tweetstext.push(p.text) %>
+        <li><%= p.text %><br><%= p.created_at %></li>
+    <% end %>
+    
+    <h1>Analysis</h1>
+    
+    <h2>Sentiments</h2>
+    
+    <% sentiments = Indico.sentiment_hq(tweetstext) %>
+    <% average = sentiments.sum / sentiments.size.to_f %>
+    <%= (average*100).ceil %>% Positive
+<% else %>
+    Please <a href="auth/twitter">log in with Twitter</a>
 <% end %>
-
-<h1>Tweets</h1>
-
-<% tweets = current_user.twitter.home_timeline(:page => 1, :count => 10) %>
-
-<% tweetstext = [] %>
-
-<% emotions = [] %>
-
-<% tweets.each do |p| %>
-    <% tweetstext.push(p.text) %>
-    <li><%= p.text %><br><%= p.created_at %></li>
-<% end %>
-
-<h1>Analysis</h1>
-
-<h2>Sentiments</h2>
-
-<% sentiments = Indico.sentiment_hq(tweetstext) %>
-<% average = sentiments.sum / sentiments.size.to_f %>
-<%= (average*100).ceil %>% Positive
 
