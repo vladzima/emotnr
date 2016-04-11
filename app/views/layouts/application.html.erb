@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Emotnr</title>
   <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+  <title><%= content_for?(:title) ? content_for(:title) : "Emotnr – AI Twitter Sentiment Calculator" %></title>
+  <meta name="description" content="Find out the sentiment of you and your friends using AI">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <script src='https://netlify.scdn4.secure.raxcdn.com/js/77c4c5f1c76a34f7e93cb137111674922c21e6a7/share-button.min.js'></script>
   <%= csrf_meta_tags %>
+  
+  <meta property="og:url"                content="<%= request.base_url %>" />
+  <meta property="og:type"               content="article" />
+  <meta property="og:title"              content="Ask AI: <%= content_for?(:meta) ? content_for(:meta) : 'How is your world feeling today?' %>" />
+  <meta property="og:description"        content="Find out the sentiment of you and your friends using AI" />
+  <meta property="og:image"              content="<%= image_url('bg.jpg') %>" />
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="<%= request.base_url %>">
+  <meta name="twitter:title" content="Ask AI: <%= content_for?(:meta) ? content_for(:meta) : 'How is your world feeling today?' %>">
+  <meta name="twitter:description" content="Find out the sentiment of you and your friends using AI">
+  <meta name="twitter:image" content="<%= image_url('bg.jpg') %>">
 </head>
 <body>
 
