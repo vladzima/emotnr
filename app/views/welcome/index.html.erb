@@ -1,30 +1,135 @@
 <% require 'indico' %>
 <% Indico.api_key = "bc5a4dd18dd9575c7a29b61a291df552" %>
 
+<div class="container">
+    
+<h2 class="text-center">How is your world feeling today?<br>
+<small>According to your friends posts & AI</small></h2>
+
+<div style="height:50px;"></div>
+
 <% if current_user %>
-    <h2>Signed in as <%= current_user.name %></h2>
-    
-    <h1>Tweets</h1>
-    
-    <% tweets = current_user.twitter.home_timeline(:page => 1, :count => 10) %>
-    
+    <div class="row">
+    <div class="col-md-2 col-md-offset-5">
+        <a href="">
+
+    <button class="btn btn-social btn-fill btn-twitter">
+
+        <i class="fa fa-twitter"></i> <%= current_user.name %>
+
+    </button>
+    </a>
+    </div>
+    </div>
+
+    <% tweets = current_user.twitter.home_timeline(:page => 1, :count => 1) %>
     <% tweetstext = [] %>
-    
     <% emotions = [] %>
-    
     <% tweets.each do |p| %>
         <% tweetstext.push(p.text) %>
-        <li><%= p.text %><br><%= p.created_at %></li>
     <% end %>
-    
-    <h1>Analysis</h1>
-    
-    <h2>Sentiments</h2>
-    
     <% sentiments = Indico.sentiment_hq(tweetstext) %>
     <% average = sentiments.sum / sentiments.size.to_f %>
-    <%= (average*100).ceil %>% Positive
+    <% result = (average*100).ceil %>
+    <% positive_count = (800/100*result) %>
+
+    
+    <div style="height:50px;"></div>
+    <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        
+        <div class="card card-price">
+                            
+                            <div class="content">
+                                <h4 class="text-center"><% if result >= 50 %>
+                <i class="fa fa-smile-o" style="display: inline; font-size:66px;"></i> 
+            <% else %>
+                <i class="fa fa-frown-o" style="display: inline; font-size:66px;"></i> 
+            <% end %></h4>
+                                
+                                <h1 class="price">
+                                    
+                                    <%= result %>% positive
+                                </h1>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <b>800</b> tweets analyzed
+                                    </li>
+                                    <li>
+                                        <b><%= positive_count %></b> tweets positive
+                                    </li>
+                                    <li>
+                                        <b><%= (800 - positive_count) %></b> tweets negative
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="footer">
+                                <!-- AddToAny BEGIN -->
+<a class="a2a_dd" href="https://www.addtoany.com/share">
+<script async src="https://static.addtoany.com/menu/page.js"></script>
+<!-- AddToAny END -->
+                                
+                                
+                               <button type="button" class="btn btn-info btn-fill btn-block">Share</button>
+                               </a>
+                            </div>
+                        </div>
+                        
+                        
+    </div>
+    </div>
+    <div style="height:50px;"></div>
+    
 <% else %>
-    Please <a href="auth/twitter">log in with Twitter</a>
+    <center>
+    
+    <a href="auth/twitter">
+    <button class="btn btn-social btn-fill btn-twitter btn-lg">
+
+        <i class="fa fa-twitter"></i> Connect with Twitter
+
+    </button>
+    </a>
+    <p class="text-muted text-center">To find out</p>
+    
+    </center>
+    <div style="height:50px;"></div>
+<div style="height:50px;"></div>
 <% end %>
 
+</div>
+<div class="footer">
+    <div class="container">
+        <div style="height:50px;"></div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        
+        
+        <div class="card card-plain">
+                            <div class="content">
+                                <p class="card-link">
+                                    <h3 class="title">How It Works </h3></p>
+                                <p>This tiny app takes content from 800 recent tweets from your Home timeline (that includes tweets and retweets from you and your friends) and runs it
+through machine learning algorithm, which determines the sentiment of each post and the overall sentiment percentage.<br><br>
+<b>This will not post anything or use your private information.</b></p>
+<hr>
+<p>
+                                                <small>A little experiment by <a href="http://vladislav.tv">Vladislav Arbatov</a>. Feel free to <a href="mailto:mail@vladislav.tv">mail</a> me.</small></p>
+<p class="text-muted"><small>Emotnr is not affiliated with Twitter Inc. in any way. All trademarks, trade names, product names and logos appearing on the site are the property of their respective owners.
+                                           </small> </p>
+                                 
+                            </div>
+                        </div>
+                        <div style="height:30px;"></div>
+                        
+                        
+
+        
+        </div>
+
+        </div>
+        
+        </div>
+        </div>
+
+</container>
