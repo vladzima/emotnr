@@ -34,8 +34,6 @@
         <% tweetstext.push(p.text) %>
     <% end %>
     
-    <%= tweetstext %>
-    
     <% sentiments = Indico.sentiment_hq(tweetstext) %>
     <% average = sentiments.sum / sentiments.size.to_f %>
     <% result = (average*100).ceil %>
