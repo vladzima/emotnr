@@ -1,4 +1,12 @@
+<% require 'indico' %>
+<% Indico.api_key = "bc5a4dd18dd9575c7a29b61a291df552" %>
 
+<% if Rails.env.production? %>
+<%    cnumber = 50 %>
+<%    else %>
+<%    cnumber = 1 %>
+<%    end %>
+    
 
 <div class="container">
     
@@ -19,13 +27,16 @@
     </a>
     </center>
 
+    <% tweets = current_user.twitter.home_timeline(:page => 1, :count => cnumber) %>
+    <% tweetstext = [] %>
     
-    
-    <% @tweets.each do |p| %>
-        <% @tweetstext.push(p.text) %>
+    <% tweets.each do |p| %>
+        <% tweetstext.push(p.text) %>
     <% end %>
     
-    <% sentiments = Indico.sentiment_hq(@tweetstext) %>
+    <%= tweetstext %>
+    
+    <% sentiments = Indico.sentiment_hq(tweetstext) %>
     <% average = sentiments.sum / sentiments.size.to_f %>
     <% result = (average*100).ceil %>
     <% positive_count = (800/100*result) %>
@@ -99,10 +110,10 @@
 
 </div>
 <div class="footer">
-    <div class="container">
+        <div class="container">
         <div style="height:50px;"></div>
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+        <div class="col-md-6 col-md-offset-3">
         
         
         <div class="card card-plain">
@@ -119,17 +130,10 @@ through machine learning algorithm, which determines the sentiment of each post 
                                            </small> </p>
                                  
                             </div>
-                        </div>
-                        <div style="height:30px;"></div>
-                        
-                        
-
-        
         </div>
-
-        </div>
-        
+        <div style="height:30px;"></div>
         </div>
         </div>
-
+        </div>
+        </div>
 </container>
