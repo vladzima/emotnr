@@ -6,7 +6,7 @@ This project uses [conventional changelog](https://github.com/conventional-chang
 
 1) To commit your changes first run:
 ```
-npm install commitizen -g && npm install -g cz-conventional-changelog
+npm i commitizen -g && npm i -g cz-conventional-changelog
 ```
 2) And then use `git cz` instead of `git commit` (`cz` works with all standard git parameters, [more](https://github.com/commitizen/cz-cli) on the usage). You will be presented with a prompt, please choose your options carefully.
 
